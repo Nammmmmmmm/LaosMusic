@@ -1,38 +1,331 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+.main-bg {
+  display: flex;
   min-height: 100vh;
+  background: #230303;
+  color: #fff;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.sidebar {
+  width: 240px;
+  background: #1a0101;
+  padding: 0 0 24px 0;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #ff4d24;
+  padding: 32px 0 24px 32px;
+}
+.logo-icon {
+  font-size: 2.2rem;
+  margin-right: 8px;
+}
+.logo-text {
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+.menu {
+  width: 100%;
+}
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 16px 32px;
+  font-size: 1.1rem;
+  color: #bdbdbd;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.menu-item.active, .menu-item:hover {
+  background: #2d0a0a;
+  color: #fff;
+}
+.menu-icon {
+  margin-right: 16px;
+  font-size: 1.3rem;
+}
+
+.content {
+  flex: 1;
+  padding: 0 40px;
+}
+.header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 32px 0 16px 0;
+}
+.search {
+  flex: 1;
+  max-width: 400px;
+  background: #3a1818;
+  border: none;
+  border-radius: 24px;
+  padding: 12px 24px;
+  color: #fff;
+  font-size: 1rem;
+  margin-right: 24px;
+  outline: none;
+}
+.login-btn {
+  background: #ff4d24;
+  color: #fff;
+  border: none;
+  border-radius: 24px;
+  padding: 10px 28px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.login-btn:hover {
+  background: #ff2a00;
+}
+.section {
+  margin-bottom: 40px;
+}
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.see-more {
+  color: #ff4d24;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-left: 16px;
+}
+.album-list {
+  display: flex;
+  gap: 32px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+.album-item {
+  position: relative;
+  width: 150px;
+  min-height: 210px;
+  display: block;
+  padding-top: 8px;
+  transition: box-shadow 0.3s;
+  z-index: 1;
+}
+.album-item:hover {
+  z-index: 10;
+}
+.album-img {
+  width: 150px;
+  height: 150px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #2d0a0a;
+  margin-bottom: 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  transition: transform 0.3s, box-shadow 0.3s, border 0.3s;
+  border: 2.5px solid transparent;
+}
+.album-item:hover .album-img {
+  transform: scale(1.06);
+  border: 2.5px solid rgba(255,255,255,0.5);
+  box-shadow: 0 4px 24px 0 rgba(255,255,255,0.15);
+  z-index: 2;
+}
+.album-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.album-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 2px;
+  color: #fff;
+}
+.album-artist {
+  font-size: 0.95rem;
+  color: #bdbdbd;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 140px;
+}
+.album-title-hover {
+  display: none;
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  background: rgba(0,0,0,0.65);
+  color: #fff;
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-align: center;
+  text-shadow: 0 2px 8px #000;
+  pointer-events: none;
+  border-radius: 8px;
+  padding: 4px 6px 3px 6px;
+  max-width: calc(100% - 16px);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  z-index: 3;
+}
+.album-item:hover .album-title-hover {
+  display: block;
+}
+.album-info-hover {
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 158px;
+  background: rgba(0,0,0,0.85);
+  border-radius: 0 0 12px 12px;
+  padding: 12px 12px 8px 12px;
+  min-height: 48px;
+  box-sizing: border-box;
+  z-index: 5;
+  width: 100%;
+}
+.album-title-hover2 {
+  color: #fff;
+  font-size: 1.08rem;
+  font-weight: 700;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.album-artist-hover2 {
+  color: #bdbdbd;
+  font-size: 0.98rem;
+  font-weight: 400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.album-item:hover .album-info-hover {
+  display: block;
+}
+@media (max-width: 900px) {
+  .sidebar { width: 60px; }
+  .logo-text { display: none; }
+  .menu-item span:not(.menu-icon) { display: none; }
+  .content { padding: 0 10px; }
+  .album-item, .album-img { width: 100px; height: 100px; }
+}
+
+.slider-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 900px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+.slider-arrow {
+  background: #2d0a0a;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 2;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  transition: background 0.2s;
+}
+.slider-arrow:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+.slider-arrow.left {
+  margin-right: 8px;
+}
+.slider-arrow.right {
+  margin-left: 8px;
+}
+.album-list.slider {
+  display: flex;
+  gap: 20px;
+  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+  overflow: hidden;
+  width: 850px;
+  max-width: 100%;
+}
+@media (max-width: 1000px) {
+  .slider-wrapper, .album-list.slider {
+    width: 100vw;
+    max-width: 100vw;
+  }
 }
 
-.App-link {
-  color: #61dafb;
+.slider-wrapper.left-align {
+  margin: 0;
+  justify-content: flex-start;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.slider-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+.slider-arrow.left {
+  left: 0;
+}
+.slider-arrow.right {
+  right: 0;
+}
+.album-list.horizontal-slider {
+  display: flex;
+  flex-wrap: nowrap;
+  width: fit-content;
+  min-width: 0;
+  max-width: none;
+  gap: 24px;
+  scroll-behavior: smooth;
+  padding-bottom: 8px;
+  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+.album-list.horizontal-slider::-webkit-scrollbar {
+  display: none;
+}
+.album-list.horizontal-slider {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.album-list.horizontal-slider .album-item {
+  flex: 0 0 150px;
+  width: 150px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.album-list-viewport {
+  width: 1020px;
+  max-width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  vertical-align: top;
+}
+.slider-no-scroll {
+  scrollbar-width: none;
+}
+.slider-no-scroll::-webkit-scrollbar {
+  display: none;
 }
