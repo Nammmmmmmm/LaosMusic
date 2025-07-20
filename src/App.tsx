@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
+import MusicPlayer from './MusicPlayer';
 
 const sidebarMenu = [
   { icon: '🏠', label: 'Home', active: true },
@@ -9,14 +10,14 @@ const sidebarMenu = [
 ];
 
 const listenToday = [
-  { img: '/img/a1.jpg', title: 'HÃY TRAO CHO ANH', artist: 'Sơn Tùng M-TP' },
-  { img: '/img/a2.jpg', title: 'CHÚNG TA CỦA HIỆN TẠI', artist: 'Sơn Tùng M-TP' },
-  { img: '/img/a3.jpg', title: 'MUỘN RỒI MÀ SAO CÒN', artist: 'Sơn Tùng M-TP' },
-  { img: '/img/a4.jpg', title: 'CƯƠN MƯA NGANG QUA', artist: 'Sơn Tùng M-TP' },
-  { img: '/img/a5.jpg', title: '1000 ÁNH MẮT', artist: 'Sơn Tùng M-TP' },
-  { img: '/img/a6.jpg', title: 'CÓ CHẮC YÊU LÀ ĐÂY', artist: 'Sơn Tùng M-TP' },
-  { img: '/img/a7.jpg', title: 'NƠI NÀY CÓ ANH', artist: 'Sơn Tùng M-TP' },
-  { img: '/img/a7.jpg', title: 'BÀI HÁT 8', artist: 'Sơn Tùng M-TP' },
+  { img: '/img/a1.jpg', title: 'HÃY TRAO CHO ANH', artist: 'Sơn Tùng M-TP', audio: '/Sounds/HayTraoChoAnh-SonTungMTPSnoopDogg-6010660.mp3' },
+  { img: '/img/a2.jpg', title: 'CHÚNG TA CỦA HIỆN TẠI', artist: 'Sơn Tùng M-TP', audio: '/Sounds/ChungTaCuaHienTai-SonTungMTP-6892340.mp3' },
+  { img: '/img/a3.jpg', title: 'MUỘN RỒI MÀ SAO CÒN', artist: 'Sơn Tùng M-TP', audio: '/Sounds/MuonRoiMaSaoCon-SonTungMTP-7011803.mp3' },
+  { img: '/img/a4.jpg', title: 'CƯƠN MƯA NGANG QUA', artist: 'Sơn Tùng M-TP', audio: '/Sounds/ConMuaNgangQua-SonTungMTP-1142953.mp3' },
+  { img: '/img/a5.jpg', title: '1000 ÁNH MẮT', artist: 'Sơn Tùng M-TP', audio: '/Sounds/1000anhmat.mp3' },
+  { img: '/img/a6.jpg', title: 'CÓ CHẮC YÊU LÀ ĐÂY', artist: 'Sơn Tùng M-TP', audio: '/Sounds/CoChacYeuLaDayOnionnRemix-SonTungMTPOnionn-7022615.mp3' },
+  { img: '/img/a7.jpg', title: 'NƠI NÀY CÓ ANH', artist: 'Sơn Tùng M-TP', audio: '/Sounds/NoiNayCoAnh-SonTungMTP-4772041.mp3' },
+  { img: '/img/a7.jpg', title: 'BÀI HÁT 8', artist: 'Sơn Tùng M-TP', audio: '' }, // chưa có file mp3
 ];
 
 const top100 = [
@@ -39,11 +40,28 @@ function App() {
   const maxIndex = Math.max(0, listenToday.length - visibleCount);
   const maxTop100Index = Math.max(0, top100.length - visibleCount);
 
+  // Music player state
+  const [currentSongIndex, setCurrentSongIndex] = useState<number | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const handlePlaySong = (idx: number) => {
+    setCurrentSongIndex(idx);
+    setIsPlaying(true);
+  };
+  const handlePlayPause = () => {
+    setIsPlaying((prev) => !prev);
+  };
   const handlePrev = () => {
-    setCurrentIndex((prev) => Math.max(prev - 1, 0));
+    if (currentSongIndex !== null) {
+      setCurrentSongIndex((prev) => (prev && prev > 0 ? prev - 1 : listenToday.length - 1));
+      setIsPlaying(true);
+    }
   };
   const handleNext = () => {
-    setCurrentIndex((prev) => Math.min(prev + 1, maxIndex));
+    if (currentSongIndex !== null) {
+      setCurrentSongIndex((prev) => (prev !== null && prev < listenToday.length - 1 ? prev + 1 : 0));
+      setIsPlaying(true);
+    }
   };
   const handleTop100Prev = () => {
     setTop100Index((prev) => Math.max(prev - 1, 0));
@@ -80,7 +98,7 @@ function App() {
             <div className="album-list-viewport">
               <div className="album-list horizontal-slider slider-no-scroll">
                 {listenToday.slice(currentIndex, currentIndex + visibleCount).map((item, idx) => (
-                  <div className="album-item" key={idx}>
+                  <div className="album-item" key={idx} onClick={() => handlePlaySong(currentIndex + idx)} style={{cursor: 'pointer'}}>
                     <div className="album-img">
                       <img src={item.img} alt={item.title} />
                     </div>
@@ -119,6 +137,15 @@ function App() {
           </div>
         </div>
       </div>
+      {currentSongIndex !== null && (
+        <MusicPlayer
+          song={listenToday[currentSongIndex]}
+          isPlaying={isPlaying}
+          onPlayPause={handlePlayPause}
+          onPrev={handlePrev}
+          onNext={handleNext}
+        />
+      )}
     </div>
   );
 }
